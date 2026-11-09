@@ -1,0 +1,573 @@
+export type VocabularyWord = {
+  id: string;
+  arabic: string;
+  transliteration: string;
+  meaning: string;
+  emoji: string;
+};
+
+export type ConversationOption = {
+  arabic: string;
+  transliteration: string;
+  meaning: string;
+};
+
+export type ConversationStep = {
+  prompt: string;
+  promptMeaning: string;
+  options: [ConversationOption, ConversationOption, ConversationOption];
+  correctIndex: number;
+  reply: string;
+  replyMeaning: string;
+};
+
+export type Theme = {
+  id: string;
+  title: string;
+  arabicTitle: string;
+  emoji: string;
+  description: string;
+  words: VocabularyWord[];
+  conversation: ConversationStep[];
+};
+
+const option = (arabic: string, transliteration: string, meaning: string): ConversationOption => ({
+  arabic,
+  transliteration,
+  meaning,
+});
+
+export const THEMES: Theme[] = [
+  {
+    id: "fruits",
+    title: "Buah-buahan",
+    arabicTitle: "الفَوَاكِهُ",
+    emoji: "🍎",
+    description: "Kenali nama buah dan cara membicarakannya.",
+    words: [
+      { id: "apple", arabic: "تفاح", transliteration: "Tuffāḥ", meaning: "Apel", emoji: "🍎" },
+      { id: "banana", arabic: "موز", transliteration: "Mawz", meaning: "Pisang", emoji: "🍌" },
+      { id: "orange", arabic: "برتقال", transliteration: "Burtuqāl", meaning: "Jeruk", emoji: "🍊" },
+      { id: "grapes", arabic: "عنب", transliteration: "‘Inab", meaning: "Anggur", emoji: "🍇" },
+      { id: "strawberry", arabic: "فراولة", transliteration: "Farāwilah", meaning: "Stroberi", emoji: "🍓" },
+      { id: "watermelon", arabic: "بطيخ", transliteration: "Baṭṭīkh", meaning: "Semangka", emoji: "🍉" },
+      { id: "mango", arabic: "مانجو", transliteration: "Mānjū", meaning: "Mangga", emoji: "🥭" },
+      { id: "pineapple", arabic: "أناناس", transliteration: "Anānās", meaning: "Nanas", emoji: "🍍" },
+      { id: "pear", arabic: "كمثرى", transliteration: "Kumathrā", meaning: "Pir", emoji: "🍐" },
+      { id: "lemon", arabic: "ليمون", transliteration: "Laymūn", meaning: "Lemon", emoji: "🍋" },
+    ],
+    conversation: [
+      {
+        prompt: "مَا هَذِهِ؟",
+        promptMeaning: "Apa nama buah ini?",
+        options: [option("هَذِهِ تُفَّاحَةٌ", "Hādhihi tuffāḥah", "Ini sebuah apel"), option("هَذَا كِتَابٌ", "Hādhā kitāb", "Ini sebuah buku"), option("هَذِهِ مَدْرَسَةٌ", "Hādhihi madrasah", "Ini sebuah sekolah")],
+        correctIndex: 0,
+        reply: "أُحِبُّ التُّفَّاحَ أَيْضًا!",
+        replyMeaning: "Aku juga suka apel!",
+      },
+      {
+        prompt: "أَيُّ فَاكِهَةٍ تُحِبُّ؟",
+        promptMeaning: "Buah apa yang kamu sukai?",
+        options: [option("أُحِبُّ الْمَوْزَ", "Uḥibbul-mawz", "Aku suka pisang"), option("أَنَا فِي الْفَصْلِ", "Anā fil-faṣl", "Aku di kelas"), option("السَّاعَةُ سَبْعَةٌ", "As-sā‘atu sab‘ah", "Pukul tujuh")],
+        correctIndex: 0,
+        reply: "الْمَوْزُ لَذِيذٌ!",
+        replyMeaning: "Pisang itu lezat!",
+      },
+      {
+        prompt: "هَلْ تُرِيدُ عَصِيرَ الْبُرْتُقَالِ؟",
+        promptMeaning: "Apakah kamu mau jus jeruk?",
+        options: [option("نَعَمْ، مِنْ فَضْلِكَ", "Na‘am, min faḍlik", "Ya, silakan"), option("هَذَا أَسَدٌ", "Hādhā asad", "Ini seekor singa"), option("أَنَا مُعَلِّمٌ", "Anā mu‘allim", "Saya guru")],
+        correctIndex: 0,
+        reply: "تَفَضَّلْ، هَذَا عَصِيرٌ طَازَجٌ.",
+        replyMeaning: "Silakan, ini jus segar.",
+      },
+      {
+        prompt: "كَمْ تُفَّاحَةً عِنْدَكَ؟",
+        promptMeaning: "Berapa buah apel yang kamu punya?",
+        options: [option("عِنْدِي ثَلَاثُ تُفَّاحَاتٍ", "‘Indī thalāthu tuffāḥāt", "Saya punya tiga apel"), option("أَذْهَبُ إِلَى الْمَسْجِدِ", "Adhhabu ilal-masjid", "Saya pergi ke masjid"), option("هِيَ أُخْتِي", "Hiya ukhtī", "Dia saudara perempuan saya")],
+        correctIndex: 0,
+        reply: "رَائِعٌ! لَدَيْكَ ثَلَاثُ تُفَّاحَاتٍ.",
+        replyMeaning: "Bagus! Kamu punya tiga apel.",
+      },
+    ],
+  },
+  {
+    id: "animals",
+    title: "Hewan",
+    arabicTitle: "الحَيَوَانَاتُ",
+    emoji: "🐾",
+    description: "Pelajari nama hewan yang sering dijumpai.",
+    words: [
+      { id: "cat", arabic: "قط", transliteration: "Qiṭṭ", meaning: "Kucing", emoji: "🐱" },
+      { id: "dog", arabic: "كلب", transliteration: "Kalb", meaning: "Anjing", emoji: "🐶" },
+      { id: "lion", arabic: "أسد", transliteration: "Asad", meaning: "Singa", emoji: "🦁" },
+      { id: "elephant", arabic: "فيل", transliteration: "Fīl", meaning: "Gajah", emoji: "🐘" },
+      { id: "horse", arabic: "حصان", transliteration: "Ḥiṣān", meaning: "Kuda", emoji: "🐴" },
+      { id: "rabbit", arabic: "أرنب", transliteration: "Arnab", meaning: "Kelinci", emoji: "🐰" },
+      { id: "bird", arabic: "طائر", transliteration: "Ṭā'ir", meaning: "Burung", emoji: "🐦" },
+      { id: "fish", arabic: "سمكة", transliteration: "Samakah", meaning: "Ikan", emoji: "🐟" },
+      { id: "cow", arabic: "بقرة", transliteration: "Baqarah", meaning: "Sapi", emoji: "🐮" },
+      { id: "camel", arabic: "جمل", transliteration: "Jamal", meaning: "Unta", emoji: "🐪" },
+    ],
+    conversation: [
+      {
+        prompt: "مَا هَذَا الْحَيَوَانُ؟",
+        promptMeaning: "Hewan apakah ini?",
+        options: [option("هَذَا قِطٌّ", "Hādhā qiṭṭ", "Ini kucing"), option("هَذِهِ تُفَّاحَةٌ", "Hādhihi tuffāḥah", "Ini apel"), option("هَذَا قَلَمٌ", "Hādhā qalam", "Ini pulpen")],
+        correctIndex: 0,
+        reply: "الْقِطُّ جَمِيلٌ!",
+        replyMeaning: "Kucing itu lucu!",
+      },
+      {
+        prompt: "هَلْ تُحِبُّ الْقِطَطَ؟",
+        promptMeaning: "Apakah kamu suka kucing?",
+        options: [option("نَعَمْ، أُحِبُّ الْقِطَطَ", "Na‘am, uḥibbul-qiṭaṭ", "Ya, saya suka kucing"), option("أَنَا فِي السُّوقِ", "Anā fis-sūq", "Saya di pasar"), option("عِنْدِي خَمْسَةُ كُتُبٍ", "‘Indī khamsatu kutub", "Saya punya lima buku")],
+        correctIndex: 0,
+        reply: "أَنَا أُحِبُّ الْكِلَابَ أَيْضًا.",
+        replyMeaning: "Saya juga suka anjing.",
+      },
+      {
+        prompt: "أَيْنَ يَعِيشُ الْأَسَدُ؟",
+        promptMeaning: "Di mana singa tinggal?",
+        options: [option("يَعِيشُ فِي الْغَابَةِ", "Ya‘īshu fil-ghābah", "Ia tinggal di hutan"), option("يَعِيشُ فِي الْفَصْلِ", "Ya‘īshu fil-faṣl", "Ia tinggal di kelas"), option("يَعِيشُ فِي الْمَطْعَمِ", "Ya‘īshu fil-maṭ‘am", "Ia tinggal di restoran")],
+        correctIndex: 0,
+        reply: "صَحِيحٌ، الْأَسَدُ حَيَوَانٌ قَوِيٌّ.",
+        replyMeaning: "Benar, singa adalah hewan yang kuat.",
+      },
+      {
+        prompt: "مَا الْحَيَوَانُ الَّذِي تُفَضِّلُهُ؟",
+        promptMeaning: "Hewan apa yang paling kamu sukai?",
+        options: [option("أُفَضِّلُ الْحِصَانَ", "Ufaḍḍilul-ḥiṣān", "Saya lebih suka kuda"), option("أُرِيدُ كِتَابًا", "Urīdu kitāban", "Saya ingin buku"), option("الْيَوْمُ الْجُمُعَةُ", "Al-yawmu al-jumu‘ah", "Hari ini Jumat")],
+        correctIndex: 0,
+        reply: "اخْتِيَارٌ جَمِيلٌ!",
+        replyMeaning: "Pilihan yang bagus!",
+      },
+    ],
+  },
+  {
+    id: "family",
+    title: "Keluarga dan Rumah",
+    arabicTitle: "الأُسْرَةُ وَالْبَيْتُ",
+    emoji: "🏡",
+    description: "Sebutkan anggota keluarga dan bagian rumah.",
+    words: [
+      { id: "father", arabic: "أب", transliteration: "Ab", meaning: "Ayah", emoji: "👨" },
+      { id: "mother", arabic: "أم", transliteration: "Umm", meaning: "Ibu", emoji: "👩" },
+      { id: "brother", arabic: "أخ", transliteration: "Akh", meaning: "Saudara laki-laki", emoji: "👦" },
+      { id: "sister", arabic: "أخت", transliteration: "Ukht", meaning: "Saudara perempuan", emoji: "👧" },
+      { id: "grandfather", arabic: "جد", transliteration: "Jadd", meaning: "Kakek", emoji: "👴" },
+      { id: "grandmother", arabic: "جدة", transliteration: "Jaddah", meaning: "Nenek", emoji: "👵" },
+      { id: "house", arabic: "بيت", transliteration: "Bayt", meaning: "Rumah", emoji: "🏠" },
+      { id: "room", arabic: "غرفة", transliteration: "Ghurfah", meaning: "Kamar", emoji: "🛏️" },
+      { id: "kitchen", arabic: "مطبخ", transliteration: "Maṭbakh", meaning: "Dapur", emoji: "🍳" },
+      { id: "door", arabic: "باب", transliteration: "Bāb", meaning: "Pintu", emoji: "🚪" },
+    ],
+    conversation: [
+      {
+        prompt: "مَنْ هَذَا؟",
+        promptMeaning: "Siapakah ini?",
+        options: [option("هَذَا أَبِي", "Hādhā abī", "Ini ayah saya"), option("هَذَا كِتَابِي", "Hādhā kitābī", "Ini buku saya"), option("هَذَا بَيْتِي", "Hādhā baytī", "Ini rumah saya")],
+        correctIndex: 0,
+        reply: "أَبُوكَ طَيِّبٌ. تَشَرَّفْتُ بِهِ.",
+        replyMeaning: "Ayahmu baik. Senang bertemu dengannya.",
+      },
+      {
+        prompt: "كَمْ أَخًا عِنْدَكَ؟",
+        promptMeaning: "Berapa saudara laki-laki yang kamu punya?",
+        options: [option("عِنْدِي أَخٌ وَاحِدٌ", "‘Indī akhun wāḥid", "Saya punya satu saudara laki-laki"), option("أَنَا فِي الْمَدْرَسَةِ", "Anā fil-madrasah", "Saya di sekolah"), option("أُحِبُّ الْمَوْزَ", "Uḥibbul-mawz", "Saya suka pisang")],
+        correctIndex: 0,
+        reply: "هَذَا جَمِيلٌ. هَلْ عِنْدَكَ أُخْتٌ؟",
+        replyMeaning: "Bagus. Apakah kamu punya saudara perempuan?",
+      },
+      {
+        prompt: "أَيْنَ أُمُّكَ الْآنَ؟",
+        promptMeaning: "Di mana ibumu sekarang?",
+        options: [option("أُمِّي فِي الْبَيْتِ", "Ummī fil-bayt", "Ibu saya di rumah"), option("أُمِّي طَبِيبَةٌ", "Ummī ṭabībah", "Ibu saya seorang dokter"), option("أُمِّي يَوْمُ الْأَحَدِ", "Ummī yawmu al-aḥad", "Ibu saya hari Minggu")],
+        correctIndex: 0,
+        reply: "أَتَمَنَّى لَهَا يَوْمًا سَعِيدًا.",
+        replyMeaning: "Semoga beliau menjalani hari yang menyenangkan.",
+      },
+      {
+        prompt: "مَاذَا تَفْعَلُ أُسْرَتُكَ يَوْمَ الْجُمُعَةِ؟",
+        promptMeaning: "Apa yang dilakukan keluargamu pada hari Jumat?",
+        options: [option("تَجْتَمِعُ أُسْرَتِي فِي الْبَيْتِ", "Tajtami‘u usratī fil-bayt", "Keluarga saya berkumpul di rumah"), option("أَشْرَبُ الْمَاءَ", "Asyrabul-mā’", "Saya minum air"), option("هَذَا قَلَمٌ أَزْرَقُ", "Hādhā qalam azraq", "Ini pulpen biru")],
+        correctIndex: 0,
+        reply: "قَضَاءُ الْوَقْتِ مَعَ الْأُسْرَةِ شَيْءٌ جَمِيلٌ.",
+        replyMeaning: "Menghabiskan waktu bersama keluarga adalah hal yang menyenangkan.",
+      },
+    ],
+  },
+  {
+    id: "school",
+    title: "Sekolah dan Kelas",
+    arabicTitle: "الْمَدْرَسَةُ وَالْفَصْلُ",
+    emoji: "🏫",
+    description: "Pelajari benda, tempat, dan orang di sekolah.",
+    words: [
+      { id: "school", arabic: "مدرسة", transliteration: "Madrasah", meaning: "Sekolah", emoji: "🏫" },
+      { id: "class", arabic: "فصل", transliteration: "Faṣl", meaning: "Kelas", emoji: "🧑‍🏫" },
+      { id: "book", arabic: "كتاب", transliteration: "Kitāb", meaning: "Buku", emoji: "📘" },
+      { id: "pen", arabic: "قلم", transliteration: "Qalam", meaning: "Pulpen", emoji: "🖊️" },
+      { id: "notebook", arabic: "دفتر", transliteration: "Daftar", meaning: "Buku tulis", emoji: "📓" },
+      { id: "bag", arabic: "حقيبة", transliteration: "Ḥaqībah", meaning: "Tas", emoji: "🎒" },
+      { id: "chair", arabic: "كرسي", transliteration: "Kursī", meaning: "Kursi", emoji: "🪑" },
+      { id: "table", arabic: "طاولة", transliteration: "Ṭāwilah", meaning: "Meja", emoji: "🪵" },
+      { id: "teacher", arabic: "معلم", transliteration: "Mu‘allim", meaning: "Guru", emoji: "👨‍🏫" },
+      { id: "board", arabic: "سبورة", transliteration: "Sabūrah", meaning: "Papan tulis", emoji: "🧑‍🏫" },
+    ],
+    conversation: [
+      {
+        prompt: "أَيْنَ تَدْرُسُ؟",
+        promptMeaning: "Di mana kamu belajar?",
+        options: [option("أَدْرُسُ فِي الْمَدْرَسَةِ", "Adrusu fil-madrasah", "Saya belajar di sekolah"), option("أَشْرَبُ الْحَلِيبَ", "Asyrabul-ḥalīb", "Saya minum susu"), option("هَذَا أَسَدٌ", "Hādhā asad", "Ini singa")],
+        correctIndex: 0,
+        reply: "فِي أَيِّ صَفٍّ أَنْتَ؟",
+        replyMeaning: "Kamu kelas berapa?",
+      },
+      {
+        prompt: "مَاذَا فِي حَقِيبَتِكَ؟",
+        promptMeaning: "Apa yang ada di dalam tasmu?",
+        options: [option("فِي حَقِيبَتِي كِتَابٌ وَقَلَمٌ", "Fī ḥaqībatī kitābun wa qalam", "Di tas saya ada buku dan pulpen"), option("أَبِي فِي الْبَيْتِ", "Abī fil-bayt", "Ayah saya di rumah"), option("السَّاعَةُ وَاحِدَةٌ", "As-sā‘atu wāḥidah", "Pukul satu")],
+        correctIndex: 0,
+        reply: "مُمْتَازٌ! أَنَا أَحْمِلُ دَفْتَرًا أَيْضًا.",
+        replyMeaning: "Bagus! Saya juga membawa buku tulis.",
+      },
+      {
+        prompt: "أَيْنَ الْمُعَلِّمُ؟",
+        promptMeaning: "Di mana guru itu?",
+        options: [option("الْمُعَلِّمُ فِي الْفَصْلِ", "Al-mu‘allimu fil-faṣl", "Guru ada di kelas"), option("الْمُعَلِّمُ فِي الْبَحْرِ", "Al-mu‘allimu fil-baḥr", "Guru ada di laut"), option("الْمُعَلِّمُ فِي الْمَطَارِ", "Al-mu‘allimu fil-maṭār", "Guru ada di bandara")],
+        correctIndex: 0,
+        reply: "هَيَّا نَدْخُلُ الْفَصْلَ.",
+        replyMeaning: "Ayo kita masuk kelas.",
+      },
+      {
+        prompt: "مَاذَا تَفْعَلُ فِي الْمَكْتَبَةِ؟",
+        promptMeaning: "Apa yang kamu lakukan di perpustakaan?",
+        options: [option("أَقْرَأُ كِتَابًا فِي الْمَكْتَبَةِ", "Aqra’u kitāban fil-maktabah", "Saya membaca buku di perpustakaan"), option("أَطْبُخُ الطَّعَامَ", "Aṭbukhu aṭ-ṭa‘ām", "Saya memasak makanan"), option("أَلْعَبُ فِي الْمَطَارِ", "Al‘abu fil-maṭār", "Saya bermain di bandara")],
+        correctIndex: 0,
+        reply: "الْقِرَاءَةُ مُفِيدَةٌ. إِلَى اللِّقَاءِ!",
+        replyMeaning: "Membaca itu bermanfaat. Sampai jumpa!",
+      },
+    ],
+  },
+  {
+    id: "food",
+    title: "Makanan dan Minuman",
+    arabicTitle: "الطَّعَامُ وَالشَّرَابُ",
+    emoji: "🥗",
+    description: "Bicarakan makanan, minuman, dan kesukaanmu.",
+    words: [
+      { id: "bread", arabic: "خبز", transliteration: "Khubz", meaning: "Roti", emoji: "🍞" },
+      { id: "rice", arabic: "أرز", transliteration: "Aruzz", meaning: "Nasi", emoji: "🍚" },
+      { id: "milk", arabic: "حليب", transliteration: "Ḥalīb", meaning: "Susu", emoji: "🥛" },
+      { id: "water", arabic: "ماء", transliteration: "Mā’", meaning: "Air", emoji: "💧" },
+      { id: "juice", arabic: "عصير", transliteration: "‘Aṣīr", meaning: "Jus", emoji: "🧃" },
+      { id: "eggs", arabic: "بيض", transliteration: "Bayḍ", meaning: "Telur", emoji: "🥚" },
+      { id: "cheese", arabic: "جبن", transliteration: "Jubn", meaning: "Keju", emoji: "🧀" },
+      { id: "chicken", arabic: "دجاج", transliteration: "Dajāj", meaning: "Ayam", emoji: "🍗" },
+      { id: "fish-food", arabic: "سمك", transliteration: "Samak", meaning: "Ikan (makanan)", emoji: "🐟" },
+      { id: "tea", arabic: "شاي", transliteration: "Shāy", meaning: "Teh", emoji: "🍵" },
+    ],
+    conversation: [
+      {
+        prompt: "مَاذَا تَأْكُلُ؟",
+        promptMeaning: "Apa yang sedang kamu makan?",
+        options: [option("آكُلُ خُبْزًا", "Ākulu khubzan", "Saya makan roti"), option("أَقْرَأُ كِتَابًا", "Aqra’u kitāban", "Saya membaca buku"), option("أَذْهَبُ إِلَى الْمَدْرَسَةِ", "Adhhabu ilal-madrasah", "Saya pergi ke sekolah")],
+        correctIndex: 0,
+        reply: "بِالْهَنَاءِ وَالشِّفَاءِ!",
+        replyMeaning: "Selamat menikmati!",
+      },
+      {
+        prompt: "مَاذَا تَشْرَبُ؟",
+        promptMeaning: "Apa yang kamu minum?",
+        options: [option("أَشْرَبُ الْحَلِيبَ", "Asyrabul-ḥalīb", "Saya minum susu"), option("أَلْبَسُ حَقِيبَةً", "Albasu ḥaqībah", "Saya memakai tas"), option("أَعْمَلُ طَبِيبًا", "A‘malu ṭabīban", "Saya bekerja sebagai dokter")],
+        correctIndex: 0,
+        reply: "الْحَلِيبُ مُفِيدٌ لِلصِّحَّةِ.",
+        replyMeaning: "Susu baik untuk kesehatan.",
+      },
+      {
+        prompt: "هَلْ تُحِبُّ الْأَرُزَّ؟",
+        promptMeaning: "Apakah kamu suka nasi?",
+        options: [option("نَعَمْ، أُحِبُّ الْأَرُزَّ", "Na‘am, uḥibbul-aruzz", "Ya, saya suka nasi"), option("أَنَا فِي الْحَدِيقَةِ", "Anā fil-ḥadīqah", "Saya di taman"), option("عِنْدِي أُخْتٌ", "‘Indī ukht", "Saya punya saudara perempuan")],
+        correctIndex: 0,
+        reply: "مَاذَا تُفَضِّلُ مَعَ الْأَرُزِّ؟",
+        replyMeaning: "Apa yang kamu suka bersama nasi?",
+      },
+      {
+        prompt: "مَاذَا تُرِيدُ عَلَى الْفُطُورِ؟",
+        promptMeaning: "Apa yang kamu inginkan untuk sarapan?",
+        options: [option("أُرِيدُ الْبَيْضَ وَالْخُبْزَ", "Urīdul-bayḍa wal-khubz", "Saya ingin telur dan roti"), option("أُرِيدُ كُرْسِيًّا", "Urīdu kursiyyan", "Saya ingin kursi"), option("أُرِيدُ أَنْ أَنَامَ", "Urīdu an anām", "Saya ingin tidur")],
+        correctIndex: 0,
+        reply: "إِذًا، لِنَتَنَاوَلِ الْفُطُورَ مَعًا.",
+        replyMeaning: "Kalau begitu, mari kita sarapan bersama.",
+      },
+    ],
+  },
+  {
+    id: "time",
+    title: "Waktu dan Hari",
+    arabicTitle: "الْوَقْتُ وَالْأَيَّامُ",
+    emoji: "🕒",
+    description: "Mengenal waktu, hari, dan kegiatan sehari-hari.",
+    words: [
+      { id: "day", arabic: "يوم", transliteration: "Yawm", meaning: "Hari", emoji: "🌤️" },
+      { id: "week", arabic: "أسبوع", transliteration: "Usbū‘", meaning: "Minggu", emoji: "🗓️" },
+      { id: "month", arabic: "شهر", transliteration: "Syahr", meaning: "Bulan", emoji: "🌙" },
+      { id: "hour", arabic: "ساعة", transliteration: "Sā‘ah", meaning: "Jam", emoji: "🕒" },
+      { id: "morning", arabic: "صباح", transliteration: "Ṣabāḥ", meaning: "Pagi", emoji: "🌅" },
+      { id: "evening", arabic: "مساء", transliteration: "Masā’", meaning: "Sore / malam", emoji: "🌆" },
+      { id: "today", arabic: "اليوم", transliteration: "Al-yawm", meaning: "Hari ini", emoji: "📅" },
+      { id: "tomorrow", arabic: "غدا", transliteration: "Ghadan", meaning: "Besok", emoji: "➡️" },
+      { id: "sunday", arabic: "الأحد", transliteration: "Al-aḥad", meaning: "Minggu (hari)", emoji: "☀️" },
+      { id: "friday", arabic: "الجمعة", transliteration: "Al-jumu‘ah", meaning: "Jumat", emoji: "🕌" },
+    ],
+    conversation: [
+      {
+        prompt: "كَمِ السَّاعَةُ الْآنَ؟",
+        promptMeaning: "Sekarang pukul berapa?",
+        options: [option("السَّاعَةُ السَّابِعَةُ", "As-sā‘atus-sābi‘ah", "Pukul tujuh"), option("هَذَا أَخِي", "Hādhā akhī", "Ini saudara laki-laki saya"), option("أُحِبُّ الْعَصِيرَ", "Uḥibbul-‘aṣīr", "Saya suka jus")],
+        correctIndex: 0,
+        reply: "شُكْرًا! لَدَيْنَا وَقْتٌ كَافٍ.",
+        replyMeaning: "Terima kasih! Kita masih punya cukup waktu.",
+      },
+      {
+        prompt: "مَتَى تَذْهَبُ إِلَى الْمَدْرَسَةِ؟",
+        promptMeaning: "Kapan kamu pergi ke sekolah?",
+        options: [option("أَذْهَبُ صَبَاحًا", "Adhhabu ṣabāḥan", "Saya pergi pada pagi hari"), option("أَذْهَبُ إِلَى السُّوقِ", "Adhhabu ilas-sūq", "Saya pergi ke pasar"), option("أَنَا طَبِيبٌ", "Anā ṭabīb", "Saya dokter")],
+        correctIndex: 0,
+        reply: "وَمَتَى تَعُودُ إِلَى الْبَيْتِ؟",
+        replyMeaning: "Dan kapan kamu pulang ke rumah?",
+      },
+      {
+        prompt: "مَاذَا تَفْعَلُ يَوْمَ الْجُمُعَةِ؟",
+        promptMeaning: "Apa yang kamu lakukan pada hari Jumat?",
+        options: [option("أَزُورُ جَدِّي", "Azūru jaddī", "Saya mengunjungi kakek saya"), option("أَكْتُبُ بِالْقَلَمِ", "Aktubu bil-qalam", "Saya menulis dengan pulpen"), option("هَذِهِ فَرَاوِلَةٌ", "Hādhihi farāwilah", "Ini stroberi")],
+        correctIndex: 0,
+        reply: "زِيَارَةُ الْعَائِلَةِ فِكْرَةٌ جَمِيلَةٌ.",
+        replyMeaning: "Mengunjungi keluarga adalah ide yang bagus.",
+      },
+      {
+        prompt: "مَا الْيَوْمُ بَعْدَ الْأَحَدِ؟",
+        promptMeaning: "Hari apa setelah Minggu?",
+        options: [option("الِاثْنَيْنُ", "Al-ithnayn", "Senin"), option("الْجُمُعَةُ", "Al-jumu‘ah", "Jumat"), option("السَّبْتُ", "As-sabt", "Sabtu")],
+        correctIndex: 0,
+        reply: "صَحِيحٌ! يَوْمُ الِاثْنَيْنِ بَعْدَ الْأَحَدِ.",
+        replyMeaning: "Benar! Hari Senin setelah Minggu.",
+      },
+    ],
+  },
+  {
+    id: "numbers",
+    title: "Angka",
+    arabicTitle: "الأَرْقَامُ",
+    emoji: "🔢",
+    description: "Belajar menyebut angka dan jumlah benda.",
+    words: [
+      { id: "one", arabic: "واحد", transliteration: "Wāḥid", meaning: "Satu", emoji: "1️⃣" },
+      { id: "two", arabic: "اثنان", transliteration: "Ithnān", meaning: "Dua", emoji: "2️⃣" },
+      { id: "three", arabic: "ثلاثة", transliteration: "Thalāthah", meaning: "Tiga", emoji: "3️⃣" },
+      { id: "four", arabic: "أربعة", transliteration: "Arba‘ah", meaning: "Empat", emoji: "4️⃣" },
+      { id: "five", arabic: "خمسة", transliteration: "Khamsah", meaning: "Lima", emoji: "5️⃣" },
+      { id: "six", arabic: "ستة", transliteration: "Sittah", meaning: "Enam", emoji: "6️⃣" },
+      { id: "seven", arabic: "سبعة", transliteration: "Sab‘ah", meaning: "Tujuh", emoji: "7️⃣" },
+      { id: "eight", arabic: "ثمانية", transliteration: "Thamāniyah", meaning: "Delapan", emoji: "8️⃣" },
+      { id: "nine", arabic: "تسعة", transliteration: "Tis‘ah", meaning: "Sembilan", emoji: "9️⃣" },
+      { id: "ten", arabic: "عشرة", transliteration: "‘Asyarah", meaning: "Sepuluh", emoji: "🔟" },
+    ],
+    conversation: [
+      {
+        prompt: "كَمْ كِتَابًا عِنْدَكَ؟",
+        promptMeaning: "Berapa buku yang kamu punya?",
+        options: [option("عِنْدِي كِتَابَانِ", "‘Indī kitābān", "Saya punya dua buku"), option("أَنَا فِي الْبَيْتِ", "Anā fil-bayt", "Saya di rumah"), option("هَذَا طَعَامٌ", "Hādhā ṭa‘ām", "Ini makanan")],
+        correctIndex: 0,
+        reply: "جَيِّدٌ! هَلْ عِنْدَكَ قَلَمٌ؟",
+        replyMeaning: "Bagus! Apakah kamu punya pulpen?",
+      },
+      {
+        prompt: "كَمْ قَلَمًا تُرِيدُ؟",
+        promptMeaning: "Berapa pulpen yang kamu inginkan?",
+        options: [option("أُرِيدُ ثَلَاثَةَ أَقْلَامٍ", "Urīdu thalāthata aqlām", "Saya ingin tiga pulpen"), option("أُرِيدُ الْمَاءَ", "Urīdul-mā’", "Saya ingin air"), option("أَنَا مُهَنْدِسٌ", "Anā muhandis", "Saya insinyur")],
+        correctIndex: 0,
+        reply: "تَفَضَّلْ، هَذِهِ ثَلَاثَةُ أَقْلَامٍ.",
+        replyMeaning: "Silakan, ini tiga pulpen.",
+      },
+      {
+        prompt: "مَا رَقْمُ غُرْفَتِكَ؟",
+        promptMeaning: "Berapa nomor kamarmu?",
+        options: [option("رَقْمُ غُرْفَتِي خَمْسَةٌ", "Raqmu ghurfatī khamsah", "Nomor kamar saya lima"), option("غُرْفَتِي كَبِيرَةٌ", "Ghurfatī kabīrah", "Kamar saya besar"), option("أَنَا أَشْرَبُ الشَّايَ", "Anā asyrabusy-syāy", "Saya minum teh")],
+        correctIndex: 0,
+        reply: "شُكْرًا عَلَى الْمَعْلُومَةِ.",
+        replyMeaning: "Terima kasih atas informasinya.",
+      },
+      {
+        prompt: "كَمْ طَالِبًا فِي الْفَصْلِ؟",
+        promptMeaning: "Ada berapa siswa di kelas?",
+        options: [option("فِي الْفَصْلِ عَشَرَةُ طُلَّابٍ", "Fil-faṣli ‘asyaratu ṭullāb", "Ada sepuluh siswa di kelas"), option("فِي الْفَصْلِ سَبُّورَةٌ", "Fil-faṣli sabūrah", "Ada papan tulis di kelas"), option("الْفَصْلُ فِي الْبَيْتِ", "Al-faṣlu fil-bayt", "Kelas ada di rumah")],
+        correctIndex: 0,
+        reply: "مُمْتَازٌ! أَنْتَ تَعْرِفُ الْأَرْقَامَ جَيِّدًا.",
+        replyMeaning: "Bagus! Kamu mengenal angka dengan baik.",
+      },
+    ],
+  },
+  {
+    id: "professions",
+    title: "Profesi",
+    arabicTitle: "الْمِهَنُ",
+    emoji: "🧑‍⚕️",
+    description: "Kenali berbagai pekerjaan dan tempat kerjanya.",
+    words: [
+      { id: "doctor", arabic: "طبيب", transliteration: "Ṭabīb", meaning: "Dokter", emoji: "🧑‍⚕️" },
+      { id: "teacher-prof", arabic: "معلم", transliteration: "Mu‘allim", meaning: "Guru", emoji: "🧑‍🏫" },
+      { id: "engineer", arabic: "مهندس", transliteration: "Muhandis", meaning: "Insinyur", emoji: "👷" },
+      { id: "nurse", arabic: "ممرض", transliteration: "Mumarriḍ", meaning: "Perawat", emoji: "👩‍⚕️" },
+      { id: "police", arabic: "شرطي", transliteration: "Syurṭī", meaning: "Polisi", emoji: "👮" },
+      { id: "cook", arabic: "طباخ", transliteration: "Ṭabbākh", meaning: "Koki", emoji: "👨‍🍳" },
+      { id: "driver", arabic: "سائق", transliteration: "Sā’iq", meaning: "Sopir", emoji: "🚕" },
+      { id: "farmer", arabic: "مزارع", transliteration: "Muzāri‘", meaning: "Petani", emoji: "🧑‍🌾" },
+      { id: "seller", arabic: "بائع", transliteration: "Bā’i‘", meaning: "Penjual", emoji: "🧑‍💼" },
+      { id: "carpenter", arabic: "نجار", transliteration: "Najjār", meaning: "Tukang kayu", emoji: "🪚" },
+    ],
+    conversation: [
+      {
+        prompt: "مَاذَا يَعْمَلُ أَبُوكَ؟",
+        promptMeaning: "Apa pekerjaan ayahmu?",
+        options: [option("أَبِي طَبِيبٌ", "Abī ṭabīb", "Ayah saya dokter"), option("أَبِي فِي الْمَطَارِ", "Abī fil-maṭār", "Ayah saya di bandara"), option("أَبِي يَشْرَبُ الْمَاءَ", "Abī yasyrabul-mā’", "Ayah saya minum air")],
+        correctIndex: 0,
+        reply: "هُوَ يَعْمَلُ فِي الْمُسْتَشْفَى؟",
+        replyMeaning: "Apakah beliau bekerja di rumah sakit?",
+      },
+      {
+        prompt: "أَيْنَ يَعْمَلُ الْمُعَلِّمُ؟",
+        promptMeaning: "Di mana guru bekerja?",
+        options: [option("يَعْمَلُ فِي الْمَدْرَسَةِ", "Ya‘malu fil-madrasah", "Ia bekerja di sekolah"), option("يَعْمَلُ فِي الْبَحْرِ", "Ya‘malu fil-baḥr", "Ia bekerja di laut"), option("يَعْمَلُ فِي الْمَطْبَخِ فَقَطْ", "Ya‘malu fil-maṭbakh faqaṭ", "Ia hanya bekerja di dapur")],
+        correctIndex: 0,
+        reply: "نَعَمْ، الْمُعَلِّمُ يُعَلِّمُ الطُّلَّابَ.",
+        replyMeaning: "Benar, guru mengajar para siswa.",
+      },
+      {
+        prompt: "مَاذَا يَفْعَلُ الْمُهَنْدِسُ؟",
+        promptMeaning: "Apa yang dilakukan seorang insinyur?",
+        options: [option("يُصَمِّمُ الْمَبَانِيَ", "Yuṣammimul-mabānī", "Ia merancang bangunan"), option("يَطِيرُ كَالطَّائِرِ", "Yaṭīru kaṭ-ṭā’ir", "Ia terbang seperti burung"), option("يَأْكُلُ الْكِتَابَ", "Ya’kulul-kitāb", "Ia memakan buku")],
+        correctIndex: 0,
+        reply: "هَذِهِ مِهْنَةٌ مُهِمَّةٌ.",
+        replyMeaning: "Itu pekerjaan yang penting.",
+      },
+      {
+        prompt: "مَاذَا تُرِيدُ أَنْ تَكُونَ فِي الْمُسْتَقْبَلِ؟",
+        promptMeaning: "Kamu ingin menjadi apa pada masa depan?",
+        options: [option("أُرِيدُ أَنْ أَكُونَ مُهَنْدِسًا", "Urīdu an akūna muhandisan", "Saya ingin menjadi insinyur"), option("أُرِيدُ يَوْمَ الْجُمُعَةِ", "Urīdu yawmal-jumu‘ah", "Saya ingin hari Jumat"), option("أَنَا فِي الْمَكْتَبَةِ", "Anā fil-maktabah", "Saya di perpustakaan")],
+        correctIndex: 0,
+        reply: "أَتَمَنَّى لَكَ النَّجَاحَ فِي الْمُسْتَقْبَلِ.",
+        replyMeaning: "Semoga kamu sukses pada masa depan.",
+      },
+    ],
+  },
+  {
+    id: "public-places",
+    title: "Tempat Umum",
+    arabicTitle: "الأَمَاكِنُ الْعَامَّةُ",
+    emoji: "🗺️",
+    description: "Kenali tempat umum dan kegiatan di dalamnya.",
+    words: [
+      { id: "mosque", arabic: "مسجد", transliteration: "Masjid", meaning: "Masjid", emoji: "🕌" },
+      { id: "hospital", arabic: "مستشفى", transliteration: "Mustasyfā", meaning: "Rumah sakit", emoji: "🏥" },
+      { id: "market", arabic: "سوق", transliteration: "Sūq", meaning: "Pasar", emoji: "🛍️" },
+      { id: "library", arabic: "مكتبة", transliteration: "Maktabah", meaning: "Perpustakaan", emoji: "📚" },
+      { id: "park", arabic: "حديقة", transliteration: "Ḥadīqah", meaning: "Taman", emoji: "🌳" },
+      { id: "restaurant", arabic: "مطعم", transliteration: "Maṭ‘am", meaning: "Restoran", emoji: "🍽️" },
+      { id: "airport", arabic: "مطار", transliteration: "Maṭār", meaning: "Bandara", emoji: "✈️" },
+      { id: "station", arabic: "محطة", transliteration: "Maḥaṭṭah", meaning: "Stasiun", emoji: "🚉" },
+      { id: "bank", arabic: "بنك", transliteration: "Bank", meaning: "Bank", emoji: "🏦" },
+      { id: "hotel", arabic: "فندق", transliteration: "Funduq", meaning: "Hotel", emoji: "🏨" },
+    ],
+    conversation: [
+      {
+        prompt: "أَيْنَ تَشْتَرِي الطَّعَامَ؟",
+        promptMeaning: "Di mana kamu membeli makanan?",
+        options: [option("أَشْتَرِي الطَّعَامَ مِنَ السُّوقِ", "Asytarī aṭ-ṭa‘āma minas-sūq", "Saya membeli makanan di pasar"), option("أَشْتَرِي الطَّعَامَ مِنَ الْمَسْجِدِ", "Asytarī aṭ-ṭa‘āma minal-masjid", "Saya membeli makanan di masjid"), option("أَشْتَرِي الطَّعَامَ مِنَ الْمَدْرَسَةِ", "Asytarī aṭ-ṭa‘āma minal-madrasah", "Saya membeli makanan di sekolah")],
+        correctIndex: 0,
+        reply: "مَاذَا تَشْتَرِي مِنَ السُّوقِ؟",
+        replyMeaning: "Apa yang kamu beli di pasar?",
+      },
+      {
+        prompt: "أَيْنَ تَقْرَأُ الْكُتُبَ؟",
+        promptMeaning: "Di mana kamu membaca buku?",
+        options: [option("أَقْرَأُ الْكُتُبَ فِي الْمَكْتَبَةِ", "Aqra’ul-kutuba fil-maktabah", "Saya membaca buku di perpustakaan"), option("أَقْرَأُ الْكُتُبَ فِي الْمُسْتَشْفَى", "Aqra’ul-kutuba fil-mustasyfā", "Saya membaca buku di rumah sakit"), option("أَقْرَأُ الْكُتُبَ فِي الْمَطَارِ", "Aqra’ul-kutuba fil-maṭār", "Saya membaca buku di bandara")],
+        correctIndex: 0,
+        reply: "الْمَكْتَبَةُ مَكَانٌ هَادِئٌ لِلْقِرَاءَةِ.",
+        replyMeaning: "Perpustakaan adalah tempat yang tenang untuk membaca.",
+      },
+      {
+        prompt: "أَيْنَ تَذْهَبُ إِذَا مَرِضْتَ؟",
+        promptMeaning: "Ke mana kamu pergi jika sakit?",
+        options: [option("أَذْهَبُ إِلَى الْمُسْتَشْفَى", "Adhhabu ilal-mustasyfā", "Saya pergi ke rumah sakit"), option("أَذْهَبُ إِلَى الْحَدِيقَةِ لِلْعِلَاجِ", "Adhhabu ilal-ḥadīqah lil-‘ilāj", "Saya pergi ke taman untuk berobat"), option("أَذْهَبُ إِلَى الْمَطَارِ لِلْعِلَاجِ", "Adhhabu ilal-maṭār lil-‘ilāj", "Saya pergi ke bandara untuk berobat")],
+        correctIndex: 0,
+        reply: "صَحِيحٌ. الصِّحَّةُ مُهِمَّةٌ.",
+        replyMeaning: "Benar. Kesehatan itu penting.",
+      },
+      {
+        prompt: "أَيْنَ تُصَلِّي؟",
+        promptMeaning: "Di mana kamu salat?",
+        options: [option("أُصَلِّي فِي الْمَسْجِدِ", "Uṣallī fil-masjid", "Saya salat di masjid"), option("أُصَلِّي فِي السُّوقِ", "Uṣallī fis-sūq", "Saya salat di pasar"), option("أُصَلِّي فِي الْمَطْعَمِ دَائِمًا", "Uṣallī fil-maṭ‘am dā’iman", "Saya selalu salat di restoran")],
+        correctIndex: 0,
+        reply: "شُكْرًا لَكَ. إِلَى اللِّقَاءِ!",
+        replyMeaning: "Terima kasih. Sampai jumpa!",
+      },
+    ],
+  },
+];
+
+export const LEVELS = [
+  {
+    id: "easy" as const,
+    title: "Mudah",
+    cefr: "A1",
+    subtitle: "Pemula",
+    description: "Kenali kosakata dasar dengan bantuan gambar dan petunjuk.",
+    emoji: "🌱",
+    color: "mint",
+    memoryCount: 5,
+    searchCount: 5,
+    searchSize: 8,
+    arrangeCount: 4,
+    conversationCount: 2,
+  },
+  {
+    id: "medium" as const,
+    title: "Sedang",
+    cefr: "A1–A2",
+    subtitle: "Berkembang",
+    description: "Perluas kosakata dan hadapi tantangan yang lebih beragam.",
+    emoji: "🚀",
+    color: "sun",
+    memoryCount: 8,
+    searchCount: 6,
+    searchSize: 9,
+    arrangeCount: 6,
+    conversationCount: 3,
+  },
+  {
+    id: "hard" as const,
+    title: "Sulit",
+    cefr: "A2",
+    subtitle: "Mandiri",
+    description: "Uji pemahaman kosakata dan percakapan sehari-hari.",
+    emoji: "🏆",
+    color: "lilac",
+    memoryCount: 10,
+    searchCount: 8,
+    searchSize: 10,
+    arrangeCount: 8,
+    conversationCount: 4,
+  },
+];
+
+export const MISSIONS = [
+  { id: "memory" as const, title: "Memory Game", subtitle: "Cocokkan gambar dan kata", emoji: "🧠", description: "Buka kartu, dengarkan pelafalan, lalu temukan pasangannya." },
+  { id: "word-search" as const, title: "Word Search", subtitle: "Temukan kata tersembunyi", emoji: "🔎", description: "Cari kosakata Bahasa Arab di antara huruf-huruf." },
+  { id: "arrange" as const, title: "Arrange the Letters", subtitle: "Susun huruf menjadi kata", emoji: "🧩", description: "Susun huruf acak hingga menjadi kosakata yang tepat." },
+  { id: "conversation" as const, title: "Arabic Conversation Challenge", subtitle: "Tantangan percakapan", emoji: "💬", description: "Pilih jawaban yang tepat dalam percakapan sehari-hari." },
+];
+
+export type LevelId = (typeof LEVELS)[number]["id"];
+export type MissionId = (typeof MISSIONS)[number]["id"];

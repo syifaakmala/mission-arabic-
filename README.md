@@ -2,6 +2,8 @@
 
 Website game edukasi Bahasa Arab dengan empat jenis misi dan tiga tingkat kesulitan dalam rentang CEFR A1–A2.
 
+Versi framework pada paket ini menggunakan **Next.js 15.5.29** (rilis keamanan Maintenance LTS per 3 November 2026).
+
 ## Isi permainan
 
 - **Level Mudah (A1):** pengenalan kosakata dan dialog dasar.
